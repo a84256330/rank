@@ -1,0 +1,18 @@
+spring:
+  redis:
+    #redis机器ip
+    host: 43.143.180.228
+    #redis端口
+    port: 6379
+    #redis密码
+    password: 55888855
+    #redis超时时间（毫秒），如果不设置，取默认值2000
+    timeout: 2000
+    jedis:
+      pool:
+        max-idle: 8
+        max-active: 8
+        min-idle: 0
+        max-wait: -1
+server:
+  port: 8004
