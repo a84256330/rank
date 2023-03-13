@@ -16,9 +16,9 @@ class RankControllerTest {
     void updateRank() {
         Result machao = rankController.updateRank("machao", 20);
         Result ywt = rankController.updateRank("ywt", 2);
-        Result smy = rankController.updateRank("smy", 10);
-        System.out.println(JSON.toJSONString(machao));
-        System.out.println(JSON.toJSONString(ywt));
+        Result smy = rankController.updateRank("smyabscDSSAFADFA", 270);
+//        System.out.println(JSON.toJSONString(machao));
+//        System.out.println(JSON.toJSONString(ywt));
         System.out.println(JSON.toJSONString(smy));
         Result rankAll = rankController.getRankAll(10);
         System.out.println(JSON.toJSONString(rankAll));
@@ -28,10 +28,14 @@ class RankControllerTest {
     }
 
     @Test
-    void getRank() {
+    void delRank() {
+        Result result = rankController.delRank("", "yU7JnFWoC2e13Ddr");
+        System.out.println(result);
     }
 
     @Test
     void getRankAll() {
+        Result rankAll = rankController.getRankAll(10);
+        System.out.println(JSON.toJSONString(rankAll));
     }
 }

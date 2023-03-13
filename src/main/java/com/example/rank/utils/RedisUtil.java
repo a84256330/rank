@@ -1,5 +1,6 @@
 package com.example.rank.utils;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.connection.RedisZSetCommands;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
@@ -9,6 +10,7 @@ import javax.annotation.Resource;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -19,6 +21,7 @@ import java.util.concurrent.TimeUnit;
  * @create: 2023-03-07 22:57
  **/
 @Component
+@Slf4j
 public class RedisUtil {
     @Resource
     private RedisTemplate<String, Object> redisTemplate;
@@ -592,9 +595,33 @@ public class RedisUtil {
         }
     }
 
+    public Long zsetDelV(String key, String value) {
+        try {
+            return redisTemplate.opsForZSet().remove(key,value);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0L;
+        }
+    }
+
+    public Long zsetDelS(String key, Integer start, Integer end) {
+        try {
+            return redisTemplate.opsForZSet().removeRange(key,start,end);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0L;
+        }
+    }
+
     public Double zsetGetS(String key, String value) {
         try {
-            return redisTemplate.opsForZSet().score(key,value);
+            Double score = redisTemplate.opsForZSet().score(key, value);
+            log.info("[zsetGetS],score:"+score);
+            if (Objects.nonNull(score) && score.intValue()>0) {
+                return score;
+            }else {
+                return 0D;
+            }
         } catch (Exception e) {
             e.printStackTrace();
             return 0D;
